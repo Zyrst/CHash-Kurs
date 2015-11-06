@@ -9,8 +9,8 @@ namespace Uppgift1
     
     public class Vector
     {
-        private float mX;
-        private float mY;
+        public float mX;
+        public float mY;
 
 
         public static Vector createVector(float x, float y)
@@ -42,5 +42,13 @@ namespace Uppgift1
             
             return (v1.mX * v2.mX) + (v1.mY * v2.mY);
         }
+
+        public static Vector operator *(Vector v, float val)
+        {
+            v.mX *= val;
+            v.mY *= val;
+            return v;
+        }
+
     }
 }
