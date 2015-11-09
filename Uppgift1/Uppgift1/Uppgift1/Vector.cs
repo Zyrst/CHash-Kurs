@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Uppgift1
 {
     
-    public class Vector
+    public struct Vector
     {
         public float mX;
         public float mY;
@@ -48,6 +48,23 @@ namespace Uppgift1
             v.mX *= val;
             v.mY *= val;
             return v;
+        }
+
+       public static bool operator ==(Vector v1, Vector v2)
+        {
+            if((v1.mX == v2.mX) && (v1.mY == v2.mY))
+                return true;
+            else 
+                return false;
+           
+        }
+
+        public static bool operator !=(Vector v1, Vector v2)
+        {
+            if ((v1.mX != v2.mX) && (v1.mY != v2.mY))
+                return true;
+            else
+                return false;
         }
 
     }
