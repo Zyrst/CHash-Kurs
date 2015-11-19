@@ -9,9 +9,32 @@ namespace Uppgift1
     
     public struct Vector
     {
-        public float mX;
-        public float mY;
+        private float mX;
+        private float mY;
 
+        public float X 
+        {
+            get
+            {
+                return mX;
+            }
+            set
+            {
+                mX = value;
+            }
+        }
+
+        public float Y
+        {
+            get
+            {
+                return mY;
+            }
+            set
+            {
+                mY = value;
+            }
+        }
 
         public static Vector createVector(float x, float y)
         {
@@ -52,19 +75,12 @@ namespace Uppgift1
 
        public static bool operator ==(Vector v1, Vector v2)
         {
-            if((v1.mX == v2.mX) && (v1.mY == v2.mY))
-                return true;
-            else 
-                return false;
-           
+            return v1.mX == v2.mX && v1.mY == v2.mY;           
         }
 
         public static bool operator !=(Vector v1, Vector v2)
         {
-            if ((v1.mX != v2.mX) && (v1.mY != v2.mY))
-                return true;
-            else
-                return false;
+            return v1.mX != v2.mX && v1.mY != v2.mY;    
         }
 
     }
