@@ -14,7 +14,6 @@ namespace Uppgift1
             float dot = v1 * v2;
             float cross = (v1.X * v2.Y) - (v1.Y * v2.X);
             return Math.Atan2(cross, dot) * 180 / Math.PI;
-            //return Math.Atan2(v2.Y, v2.X) - Math.Atan2(v1.Y, v1.X) * 180 / Math.PI;
         }
 
         public static float Length(Vector v)

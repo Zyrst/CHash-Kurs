@@ -39,48 +39,41 @@ namespace Uppgift1
         public static Vector createVector(float x, float y)
         {
             Vector v = new Vector();
-            v.mX = x;
-            v.mY = y;
+            v.X = x;
+            v.Y = y;
             return v;
         }
-        
-       public static Vector operator +(Vector v1, Vector v2)
-       {
-            Vector v = new Vector();
-            v.mX = v1.mX + v2.mX;
-            v.mY = v1.mY + v2.mY;
-            return v;
-       }
-       
+
+        public static Vector operator +(Vector v1, Vector v2)
+        {
+            return createVector(v1.X + v2.X, v1.Y + v2.Y);
+        }
+
         public static Vector operator -(Vector v1, Vector v2)
         {
-            Vector v = new Vector();
-            v.mX = v1.mX - v2.mX;
-            v.mY = v1.mY - v2.mY;
-            return v;
+            return createVector(v1.X - v2.X, v1.Y - v2.Y);
         }
 
         public static float operator *(Vector v1, Vector v2)
         {
-            
-            return (v1.mX * v2.mX) + (v1.mY * v2.mY);
+            return (v1.X * v2.X) + (v1.Y * v2.Y);
         }
 
         public static Vector operator *(Vector v, float val)
         {
-            v.mX *= val;
-            v.mY *= val;
+            v.X *= val;
+            v.Y *= val;
             return v;
         }
 
        public static bool operator ==(Vector v1, Vector v2)
         {
-            return v1.mX == v2.mX && v1.mY == v2.mY;           
+            return v1.X == v2.X && v1.Y == v2.Y;           
         }
 
         public static bool operator !=(Vector v1, Vector v2)
         {
-            return v1.mX != v2.mX && v1.mY != v2.mY;    
+            return v1.X != v2.X && v1.Y != v2.Y;    
         }
 
     }
