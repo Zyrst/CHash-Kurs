@@ -40,12 +40,14 @@ namespace Uppgift_2
         public Rectangle()
         {
             _width = _height = 0;
+            myType = Type.Rectangle;
         }
 
         public Rectangle(float width, float height)
         {
             Width = width;
             Height = height;
+            myType = Type.Rectangle;
         }
 
         public override void CalculateArea()

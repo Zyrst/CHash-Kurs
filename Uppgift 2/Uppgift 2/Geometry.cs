@@ -8,13 +8,22 @@ namespace Uppgift_2
 {
     class Geometry
     {
+        public enum Type {Triangle, Circle, Rectangle };
+        protected Type myType;
+
         private float _area;
         private float _circumference;
         public float Area
         {
             get
             {
-                return _area;
+                if(_area == 0)
+                {
+                    CalculateArea();
+                    return _area;
+                }
+                else 
+                    return _area;
             }
             set
             {
@@ -26,7 +35,13 @@ namespace Uppgift_2
         {
             get
             {
-                return _circumference;
+                if(_circumference == 0)
+                {
+                    CalculateCircumference();
+                    return _circumference;
+                }
+                else 
+                    return _circumference;
             }
             set
             {
@@ -39,6 +54,11 @@ namespace Uppgift_2
        
         public virtual void CalculateCircumference()
         {
+        }
+
+        public Type getType()
+        {
+            return myType;
         }
     }
 }
