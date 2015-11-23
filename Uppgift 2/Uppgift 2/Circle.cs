@@ -32,18 +32,6 @@ namespace Uppgift_2
             }
         }
 
-        public static Circle operator+(Circle circle1, Circle circle2)
-        {
-            circle1._radius += circle2._radius;
-            return circle1;
-        }
-
-        public static Circle operator-(Circle circle1, Circle circle2)
-        {
-            circle1._radius -= circle2.Radius;
-            return circle1;
-        }
-
         public override void CalculateArea()
         {
             Area = (float)Math.PI * (Radius * Radius);
