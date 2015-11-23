@@ -37,12 +37,14 @@ namespace Uppgift_2
         {
             _base = 0.0f;
             _sides = 0.0f;
+            myType = Type.Triangle;
         }
 
         public Triangle(float bse, float sides)
         {
             Base = bse;
             Sides = sides;
+            myType = Type.Triangle;
         }
 
         public override void CalculateArea()

@@ -84,7 +84,6 @@ namespace Uppgift_2
                                     {
                                         float sides = float.Parse(input);
                                         tri.Sides = sides;
-
                                         _shapes.Add(tri);
                                     }
                                     catch (FormatException)
@@ -107,6 +106,83 @@ namespace Uppgift_2
                     case ConsoleKey.D2 :
                         break;
                     case ConsoleKey.D3:
+                        Console.WriteLine("Which shape do you want information about?");
+                        string input1 = Console.ReadLine();
+                        int index = int.Parse(input1);
+                        try
+                        {
+                            Geometry g = _shapes[index];
+                            switch (g.getType())
+                            {
+                                case Geometry.Type.Circle:
+                                    bool repeat = true;
+                                    while (repeat)
+                                    {
+                                        Console.WriteLine();
+                                        Console.WriteLine("Information about Circle: 1.Radius, 2.Area, 3.Circumference, 4.Return");
+                                        key = Console.ReadKey();
+                                        Circle c = (Circle)g;
+                                        switch (key.Key)
+                                        {
+                                            case ConsoleKey.D1:
+                                                Console.WriteLine("Radius: " + c.Radius);
+                                                break;
+                                            case ConsoleKey.D2:
+                                                Console.WriteLine("Area: " + c.Area);
+                                                break;
+                                            case ConsoleKey.D3:
+                                                Console.WriteLine("Circumference" + c.Circumference);
+                                                break;
+                                            case ConsoleKey.D4:
+                                                repeat = false;
+                                                break;
+                                            default:
+                                                Console.WriteLine("Not an option");
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case Geometry.Type.Rectangle:
+                                    repeat = true;
+                                    while (repeat)
+                                    {
+                                        Console.WriteLine("Information about Rectangle: 1.Width and Height, 2.Area, 3.Circumference, 4.Return");
+                                        key = Console.ReadKey();
+                                        Rectangle r = (Rectangle)g;
+                                        switch (key.Key)
+                                        {
+                                            case ConsoleKey.D1:
+                                                Console.WriteLine("Width:{0} Height:{1}", r.Width, r.Height);
+                                                break;
+                                            case ConsoleKey.D2:
+                                                Console.WriteLine("Area: " + r.Area);
+                                                break;
+                                            case ConsoleKey.D3:
+                                                Console.WriteLine("Circumference" + r.Circumference);
+                                                break;
+                                            case ConsoleKey.D4:
+                                                repeat = false;
+                                                break;
+                                            default:
+                                                Console.WriteLine("Not an option");
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case Geometry.Type.Triangle:
+                                    break;
+
+                            }    
+                            
+                        }
+                        catch(System.NullReferenceException e)
+                        {
+                            Console.WriteLine(e.Data);
+                        }
+                        catch(System.ArgumentOutOfRangeException)
+                        {
+                            Console.WriteLine("Out of index");
+                        }
                         break;
                     case ConsoleKey.D4:
                         quit = true;

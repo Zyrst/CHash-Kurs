@@ -11,11 +11,13 @@ namespace Uppgift_2
         public Circle()
         {
             Radius = 0f;
+            myType = Type.Circle;
         }
 
         public Circle(float radius)
         {
             _radius = radius;
+            myType = Type.Circle;
         }
         private float _radius;
         public float Radius
