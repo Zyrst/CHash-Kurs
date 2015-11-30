@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -71,7 +72,7 @@ namespace Uppgift3
         {
            for(int i = 0; i < mCount; i++)
            {
-               if(mElements[i].Equals(e))
+               if(Contains(e))
                {
                    for(int j = i; j < mCount - 1; j++)
                    {
@@ -85,6 +86,24 @@ namespace Uppgift3
            return false;
         }
 
+        public bool Remove(int index)
+        {
+            if(index < mCount)
+            {
+                for (int i = index; i < mCount - 1; i++)
+                {
+                    mElements[i] = mElements[i + 1];
+                }
+                mCount--;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+          
+        }
+
         public void Clear()
         {
             mElements = new Element[mSize];
@@ -96,6 +115,43 @@ namespace Uppgift3
             {
                 e[index] = element;
                 index++;
+            }
+        }
+
+        public bool Contains(Element e)
+        {
+            foreach(Element element in mElements)
+            {
+                if (element.Equals(e))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public IEnumerator<Element> GetEnumerator()
+        {
+            foreach(Element element in mElements)
+            {
+                yield return element;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public Element this[int i]
+        {
+            get
+            {
+                return mElements[i];
+            }
+            set
+            {
+                mElements[i] = value;
             }
         }
     }
