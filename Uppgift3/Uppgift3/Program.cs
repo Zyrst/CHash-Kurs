@@ -8,29 +8,41 @@ namespace Uppgift3
 {
     class Program
     {
+
+        public struct Vector
+        {
+            public int x;
+            public int y;
+
+            public void Set(int _x, int _y)
+            {
+                x = _x;
+                y = _y;
+            }
+        }
+
         static void Main(string[] args)
         {
-            SimpleList<int> intList = new SimpleList<int>();
-            Random rand = new Random();
+            SimpleList<Object> yolo = new SimpleList<object>();
 
-            for(int i = 0; i < 17; i++)
-            {
-                intList.Add(i);
+            yolo.Add("Hello");
+            yolo.Add(2);
+            yolo.Add(10.3f);
+            Console.WriteLine("List containing objects");
+            Console.WriteLine("String: {0} int: {1} float: {2}", yolo[0], yolo[1], yolo[2]);
 
-            }
+            SimpleList<ValueType> values = new SimpleList<ValueType>();
+            values.Add(10.4f);
+            values.Add(true);
+            values.Add(1337);
+            Vector v = new Vector();
+            v.Set(10, 20);
+            values.Add(v);
 
-            for(int j = 0; j < intList.Count; j++)
-            {
-                Console.WriteLine(intList[j]);
-            }
+            Vector y = (Vector)values[3];
+            Console.WriteLine("List containing Valuetypes");
+            Console.WriteLine("Float: {0} Bool: {1} Int: {2} Struct: ({3}, {4})", values[0], values[1], values[2],y.x, y.y);
 
-            intList.Remove(10);
-            intList.Remove(intList[2]);
-            Console.WriteLine("Removed element 10 and at index 2, new Count: " + intList.Count);
-            for (int j = 0; j < intList.Count; j++)
-            {
-                Console.WriteLine(intList[j]);
-            }
             Console.ReadLine();
         }
     }
