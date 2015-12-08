@@ -6,95 +6,56 @@ using System.Threading;
 
 namespace Uppgift5
 {
+    public struct Parameters
+    {
+        public List<int> aList;
+        public int left;
+        public int right;
+    }
 
     class Program
     {
-        private static int COUNT = 100000;
+        private const int COUNT = 100;
 
-        public struct Parameters
+
+        public static List<int> Split(int startVal, List<int> unSplit)
         {
-            public List<int> aList;
-            public int left;
-            public int right;
-        }
-
-        public static void QuickSort(object o)
-        {
-            Parameters para = (Parameters)o;
-            Console.WriteLine();
-            Console.WriteLine(para.aList.Count);
-            int i = para.left, j = para.right;
-
-            int pivot = para.aList[(para.left + para.right) / 2];
-
-            while(i <= j)
+            List<int> splitList = new List<int>();
+            for(int i = startVal; i < unSplit.Count; i += 2)
             {
-                while (para.aList[i].CompareTo(pivot) < 0)
-                {
-                    i++;
-                }
-
-                while (para.aList[j].CompareTo(pivot) > 0)
-                {
-                    j--;
-                }
-
-                if(i <= j)
-                {
-                    //Swap
-                    int tmp = para.aList[i];
-                    para.aList[i] = para.aList[j];
-                    para.aList[j] = tmp;
-                    i++;
-                    j--;
-                }
-
-                if (para.left < j)
-                {
-                    Parameters pm = new Parameters();
-                    pm.aList = para.aList;
-                    pm.right = para.right;
-                    pm.left = j;
-                    QuickSort(pm);
-                }
-
-                if(i < para.right)
-                {
-                    Parameters pm = new Parameters();
-                    pm.aList = para.aList;
-                    pm.right = i;
-                    pm.left = para.left;
-                    QuickSort(pm);
-                }
+                splitList.Add(unSplit[i]);
             }
+
+            return splitList;
         }
 
         static void Main(string[] args)
         {
-            List<int> intList = new List<int>(COUNT / 2);
-            List<int> intList1 = new List<int>(COUNT / 2);
+            List<int> intList = new List<int>(COUNT);
             Random rand = new Random();
-            Parameters para = new Parameters();
-            Parameters para1 = new Parameters();
+           
 
-
-            for (int i = 0; i < COUNT / 2; i++)
+            for (int i = 0; i < COUNT; i++)
             {
                 intList.Add(rand.Next(100));
-                Console.Write(intList[i] + " ");
+                //Console.Write(intList[i] + " ");
             }
 
-            para.aList = intList;
-            para.left = 0;
-            para.right = intList.Count - 1;
-            Thread t0 = new Thread(QuickSort);
-            t0.Start(para);
+            QuickSort qs0 = new QuickSort(Split(0, intList));
+            QuickSort qs1 = new QuickSort(Split(1, intList));
+            Thread t0 = new Thread(qs0.Sort);
+            t0.Start();
+            qs1.Sort();
             t0.Join();
+
+          
+         
            // QuickSort(intList, 0, intList.Count - 1);
             Console.WriteLine();
-            for(int j = 0; j < 100; j++)
+            List<int> qsList = qs0.GetList();
+            for (int j = 0; j < qsList.Count; j++)
             {
-                Console.Write(intList[j] + " ");
+                Console.Write(qsList[j] + " ");
             }
 
             Console.ReadLine();
