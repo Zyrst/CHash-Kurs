@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            /*Knappar skapas*/
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -45,13 +46,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(33, 154);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(55, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "1";
+            this.button1.Location = new System.Drawing.Point(33, 154); //Vart knappen ska ritas
+            this.button1.Name = "button1";  //Namnet på knappen men inte det som syns på den
+            this.button1.Size = new System.Drawing.Size(55, 34);    //Hur stor i bredd och höjd
+            this.button1.TabIndex = 0;  //Om man trycker på tabb knappen så är det vart i ordningen den ligger
+            this.button1.Text = "1";    //Vad som står på knappen
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.button1_Click);  //Registrerar ett event som händer när man trycker på knappen
             // 
             // button2
             // 
