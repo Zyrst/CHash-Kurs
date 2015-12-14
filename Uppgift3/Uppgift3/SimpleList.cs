@@ -43,8 +43,8 @@ namespace Uppgift3
 
         private void Resize()
         {
-            Element[] newArray = new Element[mSize * 2];
             mSize *= 2;
+            Element[] newArray = new Element[mSize];
             for(int i = 0; i < mElements.Length; i++)
             {
                 newArray[i] = mElements[i];

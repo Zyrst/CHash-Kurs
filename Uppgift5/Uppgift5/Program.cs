@@ -15,8 +15,25 @@ namespace Uppgift5
 
     class Program
     {
-        private const int COUNT = 10000;
+        private const int COUNT = 1000;
 
+        public static List<int>[] Split1(List<int> unSplit)
+        {
+            List<int>[] lists = new List<int>[2];
+            lists[0] = new List<int>();
+            lists[1] = new List<int>();
+            for(int i = 0; i < unSplit.Count; i+= 2)
+            {
+                lists[0].Add(unSplit[i]);
+            }
+
+            for (int i = 1; i < unSplit.Count; i += 2)
+            {
+                lists[1].Add(unSplit[i]);
+            }
+
+            return lists;
+        }
 
         public static List<int>[] Split(List<int> unSplit)
         {
@@ -42,7 +59,7 @@ namespace Uppgift5
         static void Main(string[] args)
         {
             List<int> intList = new List<int>(COUNT);
-            Random rand = new Random();
+            Random rand = new Random(DateTime.Now.Millisecond);
            
 
             for (int i = 0; i < COUNT; i++)
@@ -70,13 +87,16 @@ namespace Uppgift5
                 sorted.Add(qsList[j]);
             }
             Console.WriteLine();
+
+            //QuickSort qs2 = new QuickSort(sorted);
+            //qs2.Sort();
             Console.WriteLine("Elapsed time: " + (DateTime.Now - time));
             
 
-            for (int i = 0; i < sorted.Count; i++ )
-            {
-                //Console.Write(sorted[i] + " ");
-            }
+            //for (int i = 0; i < qs2.GetList().Count; i++ )
+            //{
+            //    //Console.Write(qs2.GetList()[i] + " ");
+            //}
             
             
 

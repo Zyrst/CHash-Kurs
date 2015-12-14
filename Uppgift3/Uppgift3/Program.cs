@@ -23,13 +23,13 @@ namespace Uppgift3
 
         static void Main(string[] args)
         {
-            SimpleList<Object> yolo = new SimpleList<object>();
+            SimpleList<Object> objects = new SimpleList<object>();
 
-            yolo.Add("Hello");
-            yolo.Add(2);
-            yolo.Add(10.3f);
+            objects.Add("Hello");
+            objects.Add(2);
+            objects.Add(10.3f);
             Console.WriteLine("List containing objects");
-            Console.WriteLine("String: {0} int: {1} float: {2}", yolo[0], yolo[1], yolo[2]);
+            Console.WriteLine("String: {0} int: {1} float: {2}", objects[0], objects[1], objects[2]);
 
             SimpleList<ValueType> values = new SimpleList<ValueType>();
             values.Add(10.4f);
@@ -41,8 +41,23 @@ namespace Uppgift3
 
             Vector y = (Vector)values[3];
             Console.WriteLine("List containing Valuetypes");
-            Console.WriteLine("Float: {0} Bool: {1} Int: {2} Struct: ({3}, {4})", values[0], values[1], values[2],y.x, y.y);
+            Console.WriteLine("Float: {0} Bool: {1} Int: {2} Struct: ({3}, {4})", values[0], values[1], values[2], y.x, y.y);
+            
+            DateTime time = DateTime.Now;
+            SimpleList<int> intVal = new SimpleList<int>();
+            for (int i = 0; i < 10000; i++ )
+            {
+                intVal.Add(i);
+            }
+            Console.WriteLine("Count before remove:{0} ", intVal.Count);
 
+            for (int j = 1000; j < j + 100; j += 10 )
+            {
+                intVal.Remove(j);
+            }
+            Console.WriteLine("Time taken: " + (DateTime.Now - time));
+            Console.WriteLine("Count after: {0} ", intVal.Count);
+           
             Console.ReadLine();
         }
     }

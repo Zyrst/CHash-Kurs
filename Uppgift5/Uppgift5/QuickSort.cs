@@ -28,9 +28,9 @@ namespace Uppgift5
             List<int> lower = new List<int>();
             List<int> greater = new List<int>();
             greater.Add(pivot);
-            for(int i = 0; i < mList.Count; i++)
+            for (int i = 0; i < mList.Count; i++)
             {
-                if(mList[i] >= pivot)
+                if (mList[i] >= pivot)
                 {
                     greater.Add(mList[i]);
                 }
@@ -39,6 +39,16 @@ namespace Uppgift5
                     lower.Add(mList[i]);
                 }
             }
+
+            //for(int i = 0; i < mList.Count; i += 2)
+            //{
+            //    lower.Add(mList[i]);
+            //}
+
+            //for (int i = 1; i < mList.Count; i += 2)
+            //{
+            //    greater.Add(mList[i]);
+            //}
 
             Thread thread = new Thread(() =>
             {
@@ -54,7 +64,7 @@ namespace Uppgift5
             }
 
             mList = lower;
-            
+            //sort(mList, 0, mList.Count - 1);
         }
 
         private static void sort(List<int> aList, int left  , int right)
