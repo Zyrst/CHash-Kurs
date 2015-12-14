@@ -15,7 +15,7 @@ namespace Uppgift5
 
     class Program
     {
-        private const int COUNT = 1000;
+        private const int COUNT = 50000;
 
         public static List<int>[] Split1(List<int> unSplit)
         {
@@ -60,6 +60,7 @@ namespace Uppgift5
         {
 
             DateTime time = DateTime.Now;
+            Console.WriteLine("Number of elements: " + COUNT);
             Console.WriteLine("Start time: " + time);
             List<int> intList = new List<int>(COUNT);
             Random rand = new Random(DateTime.Now.Millisecond);
@@ -74,7 +75,6 @@ namespace Uppgift5
             QuickSort qs0 = new QuickSort(lists[0]);
             QuickSort qs1 = new QuickSort(lists[1]);
             Thread t0 = new Thread(qs0.Sort);
-           
             t0.Start();
             qs1.Sort();
             t0.Join();
@@ -83,20 +83,20 @@ namespace Uppgift5
 
 
             List<int> qsList = qs0.GetList();
-            for (int j = 0; j < qsList.Count; j++)
+            for (int j = 0; j < qs0.GetList().Count; j++)
             {
-                sorted.Add(qsList[j]);
+                sorted.Add(qs0.GetList()[j]);
             }
             Console.WriteLine();
 
             //QuickSort qs2 = new QuickSort(sorted);
             //qs2.Sort();
             Console.WriteLine("Elapsed time: " + (DateTime.Now - time));
-            
 
-            //for (int i = 0; i < qs2.GetList().Count; i++ )
+
+            //for (int i = 0; i < sorted.Count; i++)
             //{
-            //    //Console.Write(qs2.GetList()[i] + " ");
+            //    Console.Write(sorted[i] + " ");
             //}
             
             
