@@ -58,10 +58,12 @@ namespace Uppgift5
 
         static void Main(string[] args)
         {
+
+            DateTime time = DateTime.Now;
+            Console.WriteLine("Start time: " + time);
             List<int> intList = new List<int>(COUNT);
             Random rand = new Random(DateTime.Now.Millisecond);
            
-
             for (int i = 0; i < COUNT; i++)
             {
                 intList.Add(rand.Next());
@@ -72,8 +74,7 @@ namespace Uppgift5
             QuickSort qs0 = new QuickSort(lists[0]);
             QuickSort qs1 = new QuickSort(lists[1]);
             Thread t0 = new Thread(qs0.Sort);
-            DateTime time = DateTime.Now;
-            Console.WriteLine("Start time: " + time);
+           
             t0.Start();
             qs1.Sort();
             t0.Join();
