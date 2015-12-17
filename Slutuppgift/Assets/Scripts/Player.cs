@@ -3,22 +3,31 @@ using System.Collections;
 
 public class Player : Entity {
     private float mViewPortSize;
-    private Sprite mSprite;
+    public GameObject _projectile;
+    public GameObject[] _weaponslots;
+
+    private bool _cd = false;
+    private float _timer = 0f;
+    public enum Shot : int { OneForward = 0, ThreeForward = 1, ThreeArc = 2 };
+    public Shot _shotVersion = 0;
+
 	// Use this for initialization
 	void Start () {
         MyTag = Tag.Player;
         MoveSpeed = 10;
         Health = 100;
         Damage = 1f;
-        AttackSpeed = 0.5f;
         mViewPortSize = Camera.main.orthographicSize;
-        mSprite = GetComponent<SpriteRenderer>().sprite;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Move();
-        CheckBoundries();
+        if (Health > 0)
+        {
+            Shoot();
+            Move();
+            CheckBoundries();
+        }
 	}
 
     public override void Move()
@@ -77,8 +86,72 @@ public class Player : Entity {
         }
     }
 
+    public void Shoot()
+    {
+        if(!_cd)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _cd = true;
+                switch (_shotVersion)
+                {
+                    case Shot.OneForward:
+                        Projectile go = Instantiate(_projectile).GetComponent<Projectile>();
+                        go.Create(_weaponslots[0].transform.position, new Vector2(0f, 1f), Tag.Player, Damage);
+                        break;
+                    case Shot.ThreeForward:
+                        foreach(GameObject g in _weaponslots)
+                        {
+                            Instantiate(_projectile).GetComponent<Projectile>().Create(g.transform.position, new Vector2(0f, 1f), Tag.Player, Damage);
+                        }
+                        break;
+                    case Shot.ThreeArc:
+                        Instantiate(_projectile).GetComponent<Projectile>().Create(_weaponslots[0].transform.position, new Vector2(0f, 1f), Tag.Player, Damage);
+                        Instantiate(_projectile).GetComponent<Projectile>().Create(_weaponslots[1].transform.position, new Vector2(-0.5f, 1f), Tag.Player, Damage);
+                        Instantiate(_projectile).GetComponent<Projectile>().Create(_weaponslots[2].transform.position, new Vector2(0.5f, 1f), Tag.Player, Damage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else
+        {
+            _timer += Time.deltaTime;
+            if(_timer >= AttackSpeed)
+            {
+                _cd = false;
+                _timer = 0f;
+            }
+        }
+    }
     public override void Kill()
     {
-        throw new System.NotImplementedException();
+        Game.Instance._playerDead = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.name.Contains("Projectile"))
+        {
+            if(col.GetComponent<Projectile>().MyTag == Tag.Enemy)
+            {
+                TakeDamage(col.GetComponent<Projectile>().Damage);
+                Destroy(col.gameObject);
+            }
+        }
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        Health -= damage;
+        if(Health <= 0)
+        {
+            Kill();
+        }
     }
 }

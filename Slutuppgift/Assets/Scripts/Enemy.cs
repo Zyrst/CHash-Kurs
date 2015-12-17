@@ -5,6 +5,11 @@ public class Enemy : Entity {
     private Vector3 mDir;
     private float mViewPortSize;
     public Sprite[] _sprites;
+    public GameObject _projectile;
+    public GameObject _explosion;
+
+    private bool _cd = true;
+    private float _timer = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +25,7 @@ public class Enemy : Entity {
 	
 	// Update is called once per frame
 	void Update () {
+        Fire();
         Move();
         CheckBoundries();
         if(Health <= 0f)
@@ -55,5 +61,66 @@ public class Enemy : Entity {
     public override void Kill()
     {
         Game.Instance.AddScore(10);
+        Instantiate(_explosion).transform.position = transform.position;
+        Destroy(this.gameObject);
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        Health -= damage;
+    }
+
+    public void Fire()
+    {
+        if(!_cd)
+        {
+            Instantiate(_projectile).GetComponent<Projectile>().Create(transform.position + new Vector3(0, -0.7f), new Vector2(0, -1f), Tag.Enemy, Damage);
+            _cd = true;
+        }
+        else
+        {
+            _timer += Time.deltaTime;
+            if (_timer >= AttackSpeed)
+            {
+                _cd = false;
+                _timer = 0f;
+            }
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.collider.name.Contains("Player"))
+        {
+            col.collider.GetComponent<Player>().TakeDamage(Damage * 5);
+            Kill();
+        }
+        else if (col.collider.name.Contains("Projectile"))
+        {
+            Projectile proj = col.collider.GetComponent<Projectile>();
+            if(proj.MyTag == Tag.Player)
+            {
+
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.name.Contains("Player"))
+        {
+            col.GetComponent<Player>().TakeDamage(Damage * 5);
+            Kill();
+        }
+        else if (col.name.Contains("Projectile"))
+        {
+            Projectile proj = col.GetComponent<Projectile>();
+            if (proj.MyTag == Tag.Player)
+            {
+                Destroy(col.gameObject);
+                Kill();
+                
+            }
+        }
     }
 }

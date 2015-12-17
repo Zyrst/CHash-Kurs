@@ -34,4 +34,6 @@ public abstract class Entity : MonoBehaviour {
     public abstract void CheckBoundries();
 
     public abstract void Kill();
+
+    public abstract void TakeDamage(float damage);
 }
