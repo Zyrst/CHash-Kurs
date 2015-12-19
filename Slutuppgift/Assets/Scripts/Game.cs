@@ -6,13 +6,16 @@ using System.Linq;
 public class Game : MonoBehaviour {
     private int _score = 0;
     public float _spawnTime = 1f;
+    public float _meteorTimer = 1f;
     private float _timer = 0f;
     public bool _playerDead = false;
+    public float _enemyAttackSpeed = 0.5f;
 
     public GameObject _enemy;
     public GameObject _player;
     public Player _currentPlayer;
     private Text _health;
+    public GameObject _meteor;
 
     private static Game _instance = null;
 
@@ -51,6 +54,7 @@ public class Game : MonoBehaviour {
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Score").text = ("Score: " + Score.ToString());
         _health = GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Health");
         _health.text = "Health: " + _currentPlayer.Health;
+        _enemyAttackSpeed = 0.5f;
 	}
 	
 	// Update is called once per frame
@@ -63,6 +67,29 @@ public class Game : MonoBehaviour {
                 Instantiate(_enemy);
                 _timer = 0f;
             }
+            if(_timer >= _meteorTimer)
+            {
+                int chance = Random.Range(0, 100);
+                if (chance <= 10)
+                {
+                    Meteor met = Instantiate(_meteor).GetComponent<Meteor>();
+                    float randdir = Random.Range(-1f, 1f);
+                    Vector3 dir;
+                    Vector3 pos;
+                    if (randdir >= 0)
+                    {
+                        dir = new Vector3(1f, 0f);
+                        pos = new Vector3(-9f, Random.Range(-7f, 7f));
+                    }
+                    else
+                    {
+                        dir = new Vector3(-1f, 0f);
+                        pos = new Vector3(9f, Random.Range(-7f, 7f));
+                    }
+
+                    met.Create(dir, pos);
+                }
+            }
             _health.text = "Health: " + _currentPlayer.Health;
         }
 	}
@@ -74,16 +101,48 @@ public class Game : MonoBehaviour {
         {
             _currentPlayer._shotVersion = Player.Shot.ThreeArc;
             _spawnTime -= 0.1f;
-            _enemy.GetComponent<Enemy>().AttackSpeed -= 0.1f;
+            _enemyAttackSpeed -= 0.1f;
         }
         if (Score >= 500 && _currentPlayer._shotVersion != Player.Shot.ThreeForward)
         {
 
             _currentPlayer._shotVersion = Player.Shot.ThreeForward;
             _spawnTime -= 0.5f;
-            _enemy.GetComponent<Enemy>().AttackSpeed -= 0.1f;
+            _enemyAttackSpeed -= 0.1f;
 
         }
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Score").text = ("Score: " + Score.ToString());
+    }
+
+    public void PlayerDied()
+    {
+        _playerDead = true;
+        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Score").gameObject.SetActive(false);
+        _health.gameObject.SetActive(false);
+        GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Dead").gameObject.SetActive(true);
+        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "FinalScore").text = "Final Score: " + System.Environment.NewLine + Score.ToString();
+
+        //Remove all enemies
+        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
+        foreach (Enemy enemey in enemies)
+        {
+            Destroy(enemey.gameObject);
+        }
+    }
+
+    public void StartGame()
+    {
+        Destroy(_currentPlayer.gameObject);
+        _currentPlayer = Instantiate(_player).GetComponent<Player>();
+
+        Score = 0;
+        _playerDead = false;
+        Text score = GetComponentsInChildren<Text>(true).FirstOrDefault(x => x.name == "Score");
+        score.gameObject.SetActive(true);
+        score.text = ("Score: " + Score.ToString());
+        _health.gameObject.SetActive(true);
+        _health.text = "Health: " + _currentPlayer.Health;
+
+        GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Dead").gameObject.SetActive(false);
     }
 }

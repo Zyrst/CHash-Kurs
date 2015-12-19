@@ -49,6 +49,8 @@
      <Compile Include="Assets\Scripts\Entity.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
+     <Compile Include="Assets\Scripts\HealPickUp.cs" />
+     <Compile Include="Assets\Scripts\Meteor.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Projectile.cs" />
  <Reference Include="UnityEngine.UI">

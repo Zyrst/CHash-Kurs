@@ -127,7 +127,7 @@ public class Player : Entity {
     }
     public override void Kill()
     {
-        Game.Instance._playerDead = true;
+        Game.Instance.PlayerDied();
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -143,6 +143,10 @@ public class Player : Entity {
                 TakeDamage(col.GetComponent<Projectile>().Damage);
                 Destroy(col.gameObject);
             }
+        }
+        else if(col.name.Contains("Meteor"))
+        {
+            TakeDamage(col.GetComponent<Meteor>().Damage);
         }
     }
 

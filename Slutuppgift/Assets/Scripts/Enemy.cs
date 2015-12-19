@@ -7,6 +7,7 @@ public class Enemy : Entity {
     public Sprite[] _sprites;
     public GameObject _projectile;
     public GameObject _explosion;
+    public GameObject _heal;
 
     private bool _cd = true;
     private float _timer = 0f;
@@ -19,6 +20,7 @@ public class Enemy : Entity {
         Health = 1f;
         Damage = 1f;
         MoveSpeed = Random.Range(1f, 2f);
+        AttackSpeed = Game.Instance._enemyAttackSpeed;
         mViewPortSize = Camera.main.orthographicSize;
         GetComponent<SpriteRenderer>().sprite = _sprites[Random.Range(0, 3)];
 	}
@@ -62,6 +64,12 @@ public class Enemy : Entity {
     {
         Game.Instance.AddScore(10);
         Instantiate(_explosion).transform.position = transform.position;
+        int rand = Random.Range(0, 100);
+        if( rand < 50)
+        {
+            Instantiate(_heal, transform.position, Quaternion.identity);
+        }
+
         Destroy(this.gameObject);
     }
 
@@ -90,19 +98,19 @@ public class Enemy : Entity {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.collider.name.Contains("Player"))
-        {
-            col.collider.GetComponent<Player>().TakeDamage(Damage * 5);
-            Kill();
-        }
-        else if (col.collider.name.Contains("Projectile"))
-        {
-            Projectile proj = col.collider.GetComponent<Projectile>();
-            if(proj.MyTag == Tag.Player)
-            {
+        //if(col.collider.name.Contains("Player"))
+        //{
+        //    col.collider.GetComponent<Player>().TakeDamage(Damage * 5);
+        //    Kill();
+        //}
+        //else if (col.collider.name.Contains("Projectile"))
+        //{
+        //    Projectile proj = col.collider.GetComponent<Projectile>();
+        //    if(proj.MyTag == Tag.Player)
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -121,6 +129,11 @@ public class Enemy : Entity {
                 Kill();
                 
             }
+        }
+        else if(col.name.Contains("Meteor"))
+        {
+            Instantiate(_explosion).transform.position = transform.position;
+            Destroy(this.gameObject);
         }
     }
 }
