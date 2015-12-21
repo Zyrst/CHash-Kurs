@@ -4,13 +4,21 @@ using System.Collections;
 using System.Linq;
 
 public class Game : MonoBehaviour {
-    private int _score = 0;
+
+    
+
+    /*Timers*/
     public float _spawnTime = 1f;
-    public float _meteorTimer = 1f;
+    public float _meteorSpawnTime = 0.5f;
     private float _timer = 0f;
+    private float _meteorTimer = 0f;
+
+    public int _meteorSpawnChance;
     public bool _playerDead = false;
+    //The rate of fire which the enemy shoots with
     public float _enemyAttackSpeed = 0.5f;
 
+    //References to different gameobjects and text
     public GameObject _enemy;
     public GameObject _player;
     public Player _currentPlayer;
@@ -34,6 +42,8 @@ public class Game : MonoBehaviour {
             }
         }
     }
+
+    private int _score = 0;
 
     public int Score
     {
@@ -61,17 +71,23 @@ public class Game : MonoBehaviour {
 	void Update () {
         if (!_playerDead)
         {
-            _timer += Time.deltaTime;
+            _timer += Time.deltaTime;       //Timer for spawning enemies
+            _meteorTimer += Time.deltaTime; //Timer for meteors
+
             if (_timer >= _spawnTime)
             {
                 Instantiate(_enemy);
                 _timer = 0f;
             }
-            if(_timer >= _meteorTimer)
+
+            if(_meteorTimer >= _meteorSpawnTime)
             {
+                _meteorTimer = 0f;
                 int chance = Random.Range(0, 100);
-                if (chance <= 10)
+                
+                if (chance <= _meteorSpawnChance)
                 {
+                    Debug.Log("Spawn meteor");
                     Meteor met = Instantiate(_meteor).GetComponent<Meteor>();
                     float randdir = Random.Range(-1f, 1f);
                     Vector3 dir;
@@ -142,7 +158,7 @@ public class Game : MonoBehaviour {
         score.text = ("Score: " + Score.ToString());
         _health.gameObject.SetActive(true);
         _health.text = "Health: " + _currentPlayer.Health;
-
+        _enemyAttackSpeed = 0.5f;
         GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Dead").gameObject.SetActive(false);
     }
 }

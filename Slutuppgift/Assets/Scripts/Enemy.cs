@@ -96,23 +96,6 @@ public class Enemy : Entity {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        //if(col.collider.name.Contains("Player"))
-        //{
-        //    col.collider.GetComponent<Player>().TakeDamage(Damage * 5);
-        //    Kill();
-        //}
-        //else if (col.collider.name.Contains("Projectile"))
-        //{
-        //    Projectile proj = col.collider.GetComponent<Projectile>();
-        //    if(proj.MyTag == Tag.Player)
-        //    {
-
-        //    }
-        //}
-    }
-
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.name.Contains("Player"))

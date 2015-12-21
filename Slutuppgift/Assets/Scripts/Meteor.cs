@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Meteor : MonoBehaviour {
+public class Meteor : Entity {
 
     public Sprite[] _sprites;
     public GameObject _explosion;
@@ -13,19 +13,7 @@ public class Meteor : MonoBehaviour {
 
     private float _damage;
 
-    public float Damage
-    {
-        get
-        {
-            return _damage;
-        }
-
-        set
-        {
-            _damage = value;
-        }
-    }
-
+    
 	// Use this for initialization
 	void Start () {
         Damage = Random.Range(1, 11);
@@ -53,14 +41,30 @@ public class Meteor : MonoBehaviour {
     {
         if(col.name.Contains("Projectile"))
         {
-            Instantiate(_explosion, this.transform.position , Quaternion.identity);
+            Instantiate(_explosion, this.transform.position, Quaternion.identity);
             Destroy(col.gameObject);
         }
+        Kill();
+        
+    }
+
+    public override void Move()
+    {
+        transform.position += _dir * _moveSpeed * Time.deltaTime;
+    }
+
+    public override void Kill()
+    {
+
         Destroy(this.gameObject);
     }
 
-    public void Move()
+    public override void TakeDamage(float damage)
     {
-        transform.position += _dir * _moveSpeed * Time.deltaTime;
+        throw new System.NotImplementedException();
+    }
+    public override void CheckBoundries()
+    {
+        throw new System.NotImplementedException();
     }
 }
