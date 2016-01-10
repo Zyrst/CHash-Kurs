@@ -32,8 +32,10 @@ public class Player : Entity {
 
     public override void Move()
     {
+       
         float y = 0;
         float x = 0;
+        //Look at input on WASD , if pressed add or subtract from its axis
         if (Input.GetKey(KeyCode.W))
         {
             y += 1;
@@ -51,9 +53,10 @@ public class Player : Entity {
             x += 1;
         }
 
+        //Multiply with a speed
         x *= MoveSpeed;
         y *= MoveSpeed;
-
+        //Add on current pos with delta
         transform.position += new Vector3(x * Time.deltaTime, y * Time.deltaTime, 0);
         
        
@@ -63,8 +66,10 @@ public class Player : Entity {
     {
         //Magic number to find edge(ish)
         float edge = mViewPortSize * 0.75f;
+
         if (transform.position.x > edge)
         {
+            //See how much the ship is outside the screen and move it back
             float over = transform.position.x - edge;
             transform.position -= new Vector3(over, 0, 0);
         }
@@ -73,7 +78,7 @@ public class Player : Entity {
             float over = transform.position.x + edge;
             transform.position -= new Vector3(over, 0, 0);
         }
-
+        //Look at top and bottom and move back if needed
         if((transform.position.y + 0.5f) > mViewPortSize)
         {
             float over = (transform.position.y + 0.5f) - mViewPortSize;
@@ -88,11 +93,13 @@ public class Player : Entity {
 
     public void Shoot()
     {
+        //No cooldown
         if(!_cd)
         {
             if (Input.GetKey(KeyCode.Space))
             {
                 _cd = true;
+                //Use the right shot config
                 switch (_shotVersion)
                 {
                     case Shot.OneForward:
@@ -107,8 +114,12 @@ public class Player : Entity {
                         break;
                     case Shot.ThreeArc:
                         Instantiate(_projectile).GetComponent<Projectile>().Create(_weaponslots[0].transform.position, new Vector2(0f, 1f), Tag.Player, Damage);
-                        Instantiate(_projectile).GetComponent<Projectile>().Create(_weaponslots[1].transform.position, new Vector2(-0.5f, 1f), Tag.Player, Damage);
-                        Instantiate(_projectile).GetComponent<Projectile>().Create(_weaponslots[2].transform.position, new Vector2(0.5f, 1f), Tag.Player, Damage);
+                        GameObject go1 = Instantiate(_projectile);
+                        go1.GetComponent<Projectile>().Create(_weaponslots[1].transform.position, new Vector2(-0.5f, 1f), Tag.Player, Damage);
+                        go1.transform.Rotate(new Vector3(0,0,25));
+                        GameObject go2 = Instantiate(_projectile);
+                        go2.GetComponent<Projectile>().Create(_weaponslots[2].transform.position, new Vector2(0.5f, 1f), Tag.Player, Damage);
+                        go2.transform.Rotate(new Vector3(0, 0, -25));
                         break;
                     default:
                         break;
@@ -117,9 +128,11 @@ public class Player : Entity {
         }
         else
         {
+            //Count up cooldown timer
             _timer += Time.deltaTime;
             if(_timer >= AttackSpeed)
             {
+                //Reset
                 _cd = false;
                 _timer = 0f;
             }
@@ -143,10 +156,6 @@ public class Player : Entity {
                 TakeDamage(col.GetComponent<Projectile>().Damage);
                 Destroy(col.gameObject);
             }
-        }
-        else if(col.name.Contains("Meteor"))
-        {
-            TakeDamage(col.GetComponent<Meteor>().Damage);
         }
     }
 

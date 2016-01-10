@@ -5,8 +5,6 @@ using System.Linq;
 
 public class Game : MonoBehaviour {
 
-    
-
     /*Timers*/
     public float _spawnTime = 1f;
     public float _meteorSpawnTime = 0.5f;
@@ -27,6 +25,7 @@ public class Game : MonoBehaviour {
 
     private static Game _instance = null;
 
+    //use singleton for easy access to game class
     public static Game Instance
     {
         get
@@ -64,7 +63,7 @@ public class Game : MonoBehaviour {
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Score").text = ("Score: " + Score.ToString());
         _health = GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Health");
         _health.text = "Health: " + _currentPlayer.Health;
-        _enemyAttackSpeed = 0.5f;
+        _enemyAttackSpeed = 0.5f;   //First attackspeed
 	}
 	
 	// Update is called once per frame
@@ -76,7 +75,7 @@ public class Game : MonoBehaviour {
 
             if (_timer >= _spawnTime)
             {
-                Instantiate(_enemy);
+                Instantiate(_enemy); //Spawn enemy
                 _timer = 0f;
             }
 
@@ -84,12 +83,13 @@ public class Game : MonoBehaviour {
             {
                 _meteorTimer = 0f;
                 int chance = Random.Range(0, 100);
-                
+                //random chance for a meteor to spawn so it doesn't clutter up
                 if (chance <= _meteorSpawnChance)
                 {
                     Debug.Log("Spawn meteor");
                     Meteor met = Instantiate(_meteor).GetComponent<Meteor>();
                     float randdir = Random.Range(-1f, 1f);
+                    //Random direction and position
                     Vector3 dir;
                     Vector3 pos;
                     if (randdir >= 0)
@@ -106,13 +106,14 @@ public class Game : MonoBehaviour {
                     met.Create(dir, pos);
                 }
             }
-            _health.text = "Health: " + _currentPlayer.Health;
+            _health.text = "Health: " + _currentPlayer.Health; //Keep the health text updated
         }
 	}
 
     public void AddScore(int amount)
     {
         Score += amount;
+        //Switch "phase" depending on score
         if (Score >= 300 && Score < 500 && _currentPlayer._shotVersion != Player.Shot.ThreeArc)
         {
             _currentPlayer._shotVersion = Player.Shot.ThreeArc;
@@ -132,6 +133,7 @@ public class Game : MonoBehaviour {
 
     public void PlayerDied()
     {
+        //Player died, remove "HUD" and add the Dead menu
         _playerDead = true;
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Score").gameObject.SetActive(false);
         _health.gameObject.SetActive(false);
@@ -148,9 +150,11 @@ public class Game : MonoBehaviour {
 
     public void StartGame()
     {
+        //Make a new player object
         Destroy(_currentPlayer.gameObject);
         _currentPlayer = Instantiate(_player).GetComponent<Player>();
 
+        //Reset everything and active HUD + deactive deadmenu
         Score = 0;
         _playerDead = false;
         Text score = GetComponentsInChildren<Text>(true).FirstOrDefault(x => x.name == "Score");

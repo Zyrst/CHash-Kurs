@@ -7,7 +7,7 @@ public abstract class Entity : MonoBehaviour {
     public float MoveSpeed;
     public float Damage;
 
-    public enum Tag : int { Player = 0, Enemy = 1}
+    public enum Tag : int { Player = 0, Enemy = 1, Neutral = 2}
     private Tag _tag;
     public Tag MyTag
     {

@@ -23,6 +23,7 @@ public class HealPickUp : MonoBehaviour {
     {
         if(col.name.Contains("Player"))
         {
+            //if collision with player increase currenthealth
             col.GetComponent<Player>().Health += 10f;
             Destroy(this.gameObject);
         }

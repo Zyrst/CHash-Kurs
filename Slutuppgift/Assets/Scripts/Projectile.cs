@@ -20,12 +20,12 @@ public class Projectile : Entity {
         MyTag = tag;
         _dir = dir;
         Damage = dmg;
+        //Use right sprite depedning on enemy or player
         if (MyTag == Tag.Enemy)
         {
             GetComponent<SpriteRenderer>().sprite = _shots[0];
             AttackSpeed = 7f;
         }
-            
         else
             GetComponent<SpriteRenderer>().sprite = _shots[1];
     }

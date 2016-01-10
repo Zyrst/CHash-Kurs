@@ -11,18 +11,18 @@ public class Meteor : Entity {
     public float _lifeTime;
     private float _timer = 0f;
 
-    private float _damage;
-
-    
 	// Use this for initialization
 	void Start () {
+        //random amount of damage and random sprite
         Damage = Random.Range(1, 11);
         GetComponent<SpriteRenderer>().sprite = _sprites[Random.Range(0, _sprites.Length)];
         _lifeTime = 10f;
+        MyTag = Tag.Neutral;
 	}
 	
     public void Create(Vector3 dir , Vector3 pos)
     {
+        //Determine what direction the meteor goes and spawn point
         _dir = dir;
         transform.position = pos;
     }
@@ -33,7 +33,8 @@ public class Meteor : Entity {
         _timer += Time.deltaTime;
         if(_timer >= _lifeTime)
         {
-            Destroy(this.gameObject);
+            //Don't let it live forever
+            Kill();
         }
     }
 
@@ -41,10 +42,19 @@ public class Meteor : Entity {
     {
         if(col.name.Contains("Projectile"))
         {
-            Instantiate(_explosion, this.transform.position, Quaternion.identity);
             Destroy(col.gameObject);
+            Kill();
         }
-        Kill();
+        //Don't collide with other metoers
+        else if(col.GetComponent<Entity>().MyTag != Tag.Neutral)
+        {
+            try
+            {
+                col.GetComponent<Entity>().TakeDamage(Damage);
+                Kill();
+            }
+            catch (System.NullReferenceException) { }
+        }
         
     }
 
@@ -53,18 +63,25 @@ public class Meteor : Entity {
         transform.position += _dir * _moveSpeed * Time.deltaTime;
     }
 
+   
+    public override void CheckBoundries()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void Kill()
     {
-
+        //Create an explosion and destory this object
+        Instantiate(_explosion, this.transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 
     public override void TakeDamage(float damage)
     {
-        throw new System.NotImplementedException();
-    }
-    public override void CheckBoundries()
-    {
-        throw new System.NotImplementedException();
+        Health -= damage;
+        if(Health <= 0f)
+        {
+            Kill();
+        }
     }
 }
