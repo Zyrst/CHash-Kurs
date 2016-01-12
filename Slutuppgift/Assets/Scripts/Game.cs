@@ -14,7 +14,7 @@ public class Game : MonoBehaviour {
     public int _meteorSpawnChance;
     public bool _playerDead = false;
     //The rate of fire which the enemy shoots with
-    public float _enemyAttackSpeed = 0.5f;
+    public float _enemyAttackSpeed;
 
     //References to different gameobjects and text
     public GameObject _enemy;
@@ -63,7 +63,7 @@ public class Game : MonoBehaviour {
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Score").text = ("Score: " + Score.ToString());
         _health = GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Health");
         _health.text = "Health: " + _currentPlayer.Health;
-        _enemyAttackSpeed = 0.5f;   //First attackspeed
+        _enemyAttackSpeed = 0.8f;   //First attackspeed
 	}
 	
 	// Update is called once per frame
@@ -118,14 +118,15 @@ public class Game : MonoBehaviour {
         {
             _currentPlayer._shotVersion = Player.Shot.ThreeArc;
             _spawnTime -= 0.1f;
-            _enemyAttackSpeed -= 0.1f;
+            if(_enemyAttackSpeed > 0.6f)
+                _enemyAttackSpeed -= 0.2f;
         }
         if (Score >= 500 && _currentPlayer._shotVersion != Player.Shot.ThreeForward)
         {
-
             _currentPlayer._shotVersion = Player.Shot.ThreeForward;
             _spawnTime -= 0.5f;
-            _enemyAttackSpeed -= 0.1f;
+            if(_enemyAttackSpeed > 0.4f)
+                _enemyAttackSpeed -= 0.2f;
 
         }
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Score").text = ("Score: " + Score.ToString());
@@ -162,7 +163,7 @@ public class Game : MonoBehaviour {
         score.text = ("Score: " + Score.ToString());
         _health.gameObject.SetActive(true);
         _health.text = "Health: " + _currentPlayer.Health;
-        _enemyAttackSpeed = 0.5f;
+        _enemyAttackSpeed = 0.8f;
         GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Dead").gameObject.SetActive(false);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 
 public abstract class Entity : MonoBehaviour {
+    //Different stats for the entities
     public float Health;
     public float AttackSpeed;
     public float MoveSpeed;
@@ -30,10 +31,9 @@ public abstract class Entity : MonoBehaviour {
        
 	}
 
+    //Implemented in inherited classes
     public abstract void Move();
     public abstract void CheckBoundries();
-
     public abstract void Kill();
-
     public abstract void TakeDamage(float damage);
 }
