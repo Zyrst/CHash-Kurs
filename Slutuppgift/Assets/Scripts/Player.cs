@@ -151,10 +151,11 @@ public class Player : Entity {
     {
         if(col.name.Contains("Projectile"))
         {
-            if(col.GetComponent<Projectile>().MyTag == Tag.Enemy)
+            Projectile proj = col.GetComponent<Projectile>();
+            if(proj.MyTag == Tag.Enemy)
             {
-                TakeDamage(col.GetComponent<Projectile>().Damage);
-                Destroy(col.gameObject);
+                TakeDamage(proj.Damage);
+                proj.TakeDamage(Damage);
             }
         }
     }

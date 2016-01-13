@@ -12,6 +12,7 @@ public class Projectile : Entity {
 	// Update is called once per frame
 	void Update () {
         Move();
+        CheckBoundries();
 	}
 
     public void Create(Vector2 pos, Vector2 dir, Tag tag, float dmg)
@@ -32,24 +33,27 @@ public class Projectile : Entity {
     public override void Move()
     {
         transform.position += (_dir * MoveSpeed) * Time.deltaTime;
-        if(transform.position.y >= 11f || transform.position.y <= -11f)
+    }
+
+    public override void CheckBoundries()
+    {
+        if (transform.position.y >= 11f || transform.position.y <= -11f)
         {
             Destroy(this.gameObject);
         }
     }
 
-    public override void CheckBoundries()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void Kill()
     {
-        throw new System.NotImplementedException();
+        Destroy(this.gameObject);
     }
 
     public override void TakeDamage(float damage)
     {
-        throw new System.NotImplementedException();
+        Health -= damage;
+        if(Health <= 0)
+        {
+            Kill();
+        }
     }
 }
