@@ -70,7 +70,6 @@ namespace Uppgift5
             for (int i = 0; i < COUNT; i++)
             {
                 intList.Add(rand.Next());
-                //Console.Write(i+ " ");
             }
             Console.Write("Starting thread");
             List<int>[] lists = Split(intList);
@@ -93,11 +92,6 @@ namespace Uppgift5
             Console.WriteLine();
             Console.WriteLine("Elapsed time: " + (DateTime.Now - time));
 
-            //for (int i = 0; i < sorted.Count; i++)
-            //{
-            //    Console.Write(sorted[i] + " ");
-            //}
-            
             Console.ReadLine();
         }
     }

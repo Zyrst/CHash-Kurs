@@ -24,7 +24,7 @@ namespace Uppgift5
         {
             Random rand = new Random();
 
-            int pivot = mList[(mList.Count - 1 )/ 2];
+            int pivot = mList[(mList.Count - 1) / 2];
             List<int> lower = new List<int>();
             List<int> greater = new List<int>();
             greater.Add(pivot);
@@ -55,28 +55,28 @@ namespace Uppgift5
             }
 
             mList = lower;
-            //sort(mList, 0, mList.Count - 1);
         }
 
-        private static void sort(List<int> aList, int left  , int right)
+        private static void sort(List<int> aList, int left, int right)
         {
             int i = left, j = right;
-            int pivot = aList[(i + j) / 2];
+            int pivot = aList[(i + j) / 2]; //Pivot element to sort after
 
-            while(i <= j)
+            while (i <= j)
             {
-                while(aList[i].CompareTo(pivot) < 0)
+                while (aList[i].CompareTo(pivot) < 0)
                 {
-                    i++;
+                    i++;    //if it less then increase
                 }
 
-                while(aList[j].CompareTo(pivot) > 0)
+                while (aList[j].CompareTo(pivot) > 0)
                 {
-                    j--;
+                    j--;    //bigger so decrees
                 }
 
-                if(i <= j)
+                if (i <= j)
                 {
+                    //swap
                     int tmp = aList[i];
                     aList[i] = aList[j];
                     aList[j] = tmp;
@@ -84,19 +84,19 @@ namespace Uppgift5
                     j--;
                 }
 
-                if(left < j)
+                if (left < j)
                 {
+                    //sort with new partition
                     sort(aList, left, j);
                 }
 
-                if(i < right)
+                if (i < right)
                 {
+                    //sort with new partition
                     sort(aList, i, right);
                 }
 
             }
         }
-
-        
     }
 }
