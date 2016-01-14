@@ -114,7 +114,7 @@ public class Enemy : Entity {
             //make sure only player projectile counts
             if (proj.MyTag == Tag.Player)
             {
-                Destroy(col.gameObject);
+                proj.TakeDamage(Damage);
                 Kill();
             }
         }

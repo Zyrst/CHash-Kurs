@@ -17,6 +17,7 @@ namespace Uppgift5
     {
         private const int COUNT = 50000;
 
+        /*Splits the list in to two equalsized random lists*/
         public static List<int>[] Split1(List<int> unSplit)
         {
             List<int>[] lists = new List<int>[2];
@@ -35,6 +36,7 @@ namespace Uppgift5
             return lists;
         }
 
+        /*Splits the list in to two list with a bigger and smaller group depedning on pivot element*/
         public static List<int>[] Split(List<int> unSplit)
         {
             int pivot = unSplit[(unSplit.Count - 1) / 2];
@@ -75,32 +77,27 @@ namespace Uppgift5
             QuickSort qs0 = new QuickSort(lists[0]);
             QuickSort qs1 = new QuickSort(lists[1]);
             Thread t0 = new Thread(qs0.Sort);
-            t0.Start();
-            qs1.Sort();
-            t0.Join();
+            t0.Start(); //Start the thread
+            qs1.Sort(); //Sort in the mainthread
+            t0.Join();//wait to join
             
             List<int> sorted = qs1.GetList();
 
 
             List<int> qsList = qs0.GetList();
+            //Add the elements from the other list to a completed list
             for (int j = 0; j < qs0.GetList().Count; j++)
             {
                 sorted.Add(qs0.GetList()[j]);
             }
             Console.WriteLine();
-
-            //QuickSort qs2 = new QuickSort(sorted);
-            //qs2.Sort();
             Console.WriteLine("Elapsed time: " + (DateTime.Now - time));
-
 
             //for (int i = 0; i < sorted.Count; i++)
             //{
             //    Console.Write(sorted[i] + " ");
             //}
             
-            
-
             Console.ReadLine();
         }
     }

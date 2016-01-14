@@ -34,7 +34,6 @@ public class Projectile : Entity {
     public override void Move()
     {
         transform.position += (_dir * MoveSpeed) * Time.deltaTime;
-        
     }
 
     public override void CheckBoundries()
@@ -53,5 +52,9 @@ public class Projectile : Entity {
     public override void TakeDamage(float damage)
     {
         Health -= damage;
+        if(Health <= 0)
+        {
+            Kill();
+        }
     }
 }

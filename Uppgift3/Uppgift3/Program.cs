@@ -51,13 +51,19 @@ namespace Uppgift3
             }
             Console.WriteLine("Count before remove:{0} ", intVal.Count);
 
-            for (int j = 1000; j < 2000; j++)
+            for (int j = 0; j < 1000; j++)
             {
-                intVal.Remove(j);
+                intVal.Remove(1000);
             }
             Console.WriteLine("Time taken: " + (DateTime.Now - time));
             Console.WriteLine("Count after: {0} ", intVal.Count);
-           
+
+            for (int j = 0; j < 1000; j++)
+            {
+                intVal.Remove(7000);
+            }
+            Console.WriteLine("Time taken: " + (DateTime.Now - time));
+            Console.WriteLine("Count after: {0} ", intVal.Count);
             Console.ReadLine();
         }
     }
