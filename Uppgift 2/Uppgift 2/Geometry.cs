@@ -12,11 +12,12 @@ namespace Uppgift_2
         protected Type myType;
 
         private float _area;
-        private float _circumference;
+        private float _circumference;   //Omkrets
         public float Area
         {
             get
             {
+                //Doesn't have an _area yet so calculate one
                 if(_area == 0)
                 {
                     CalculateArea();
@@ -35,6 +36,7 @@ namespace Uppgift_2
         {
             get
             {
+                //No circumference so need to calculate one
                 if(_circumference == 0)
                 {
                     CalculateCircumference();
@@ -48,6 +50,7 @@ namespace Uppgift_2
                 _circumference = value;
             }
         }
+        //Implemented in children
         public virtual void CalculateArea()
         {
         }
@@ -55,7 +58,7 @@ namespace Uppgift_2
         public virtual void CalculateCircumference()
         {
         }
-
+        //Return the type
         public Type getType()
         {
             return myType;

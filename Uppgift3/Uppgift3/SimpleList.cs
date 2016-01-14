@@ -12,13 +12,13 @@ namespace Uppgift3
         private int mSize;
         private int mCount = 0;
         private Element[] mElements;
-
+        //Normal constructor with size of 8 elements
         public SimpleList()
         {
             mSize = 8;
             mElements = new Element[mSize];
         }
-
+        //any sized
         public SimpleList(int size) 
         {
             mSize = size;
@@ -40,7 +40,7 @@ namespace Uppgift3
                 return false;
             }
         }
-
+        //Resize the internal array , double the size and move over old elements to the new one
         private void Resize()
         {
             mSize *= 2;
@@ -62,12 +62,13 @@ namespace Uppgift3
             }
             else
             {
+                //if we would go over the max size , resize and add
                 Resize();
                 mElements[mCount] = e;
                 mCount++;
             }
         }
-
+        //remove a specific element
         public bool Remove(Element e)
         {
            for(int i = 0; i < mCount; i++)
@@ -85,7 +86,7 @@ namespace Uppgift3
 
            return false;
         }
-
+        //Remove on a index
         public bool Remove(int index)
         {
             if(index < mCount)
@@ -103,7 +104,7 @@ namespace Uppgift3
             }
           
         }
-
+        //Clear the array
         public void Clear()
         {
             mElements = new Element[mSize];
@@ -142,7 +143,7 @@ namespace Uppgift3
         {
             return GetEnumerator();
         }
-
+        //So we have the []-operator
         public Element this[int i]
         {
             get

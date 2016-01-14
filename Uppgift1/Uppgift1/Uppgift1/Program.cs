@@ -10,13 +10,14 @@ namespace Uppgift1
     {
         static void Main(string[] args)
         {
+            //two vectors with random vals
             Vector m = Vector.createVector(10, 10);
             Vector x = Vector.createVector(15, 20);
 
-            Vector y = m + x;
-            float z = m * y;
-            Vector scaled = x * 10f;
-            Vector minus = scaled - y;
+            Vector y = m + x;   //Vector addition
+            float z = m * y;    //Scalarproduct
+            Vector scaled = x * 10f;    //Vector * scalar
+            Vector minus = scaled - y;  //Vector subtraction
 
             Console.Write("BASIC ARITHMETIC"); Console.WriteLine();
             

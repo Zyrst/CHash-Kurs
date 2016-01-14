@@ -12,20 +12,22 @@ namespace Uppgift_2
         {
             List<Geometry> _shapes = new List<Geometry>();
             bool quit = false;
-
-            while(!quit)
+            //Welcome to try catch hell
+            //Input from user to work with many shapes 
+            while (!quit)
             {
                 Console.Write("What do you want to do? Input by pressing numbers"); Console.WriteLine();
                 Console.WriteLine("1. Add Geometry. 2.Modify Shape. 3.Information about Geometry. 4.Quit");
                 ConsoleKeyInfo key = Console.ReadKey();
-                switch(key.Key)
+                switch (key.Key)
                 {
-                    case ConsoleKey.D1 :
+                    case ConsoleKey.D1:
                         Console.WriteLine("  What shape do you want to add?");
                         Console.WriteLine("1.Circle, 2.Rectangle, 3.Triangle");
                         key = Console.ReadKey();
-                        switch(key.Key)
+                        switch (key.Key)
                         {
+                            //Make a circle
                             case ConsoleKey.D1:
                                 Console.WriteLine("  Radius on Circle?");
                                 string input = Console.ReadLine();
@@ -34,15 +36,14 @@ namespace Uppgift_2
                                     float radius = float.Parse(input);
                                     Circle circle = new Circle(radius);
                                     _shapes.Add(circle);
-                                    Console.WriteLine("Added to index: " + (_shapes.Count - 1));
+                                    Console.WriteLine("Added to index: " + (_shapes.Count - 1)); //Tell the user which index they can find their newly made shape
                                 }
-                                catch(FormatException)
+                                catch (FormatException)
                                 {
-                                    Console.WriteLine("Not a number");
+                                    Console.WriteLine("Not a number"); //Incase we get something else
                                 }
-                                
-                                
                                 break;
+                            //make a rectangle, get width then height
                             case ConsoleKey.D2:
                                 Console.WriteLine(" Width? ");
                                 input = Console.ReadLine();
@@ -61,16 +62,17 @@ namespace Uppgift_2
                                         _shapes.Add(rect);
                                         Console.WriteLine("Added to index: " + (_shapes.Count - 1));
                                     }
-                                    catch(FormatException)
+                                    catch (FormatException)
                                     {
                                         Console.WriteLine("Not a number");
                                     }
                                 }
-                                catch(FormatException)
+                                catch (FormatException)
                                 {
                                     Console.WriteLine("Not a number");
                                 }
                                 break;
+                            //Triangle , base width and both sides with the same length
                             case ConsoleKey.D3:
                                 Console.WriteLine("Base width? ");
                                 input = Console.ReadLine();
@@ -99,40 +101,41 @@ namespace Uppgift_2
                                 }
                                 break;
                             default:
-                                Console.WriteLine("Not an option");
+                                Console.WriteLine("Not an option"); //Incase we get something else
                                 Console.ReadLine();
                                 Console.Clear();
                                 break;
                         }
                         break;
-                    case ConsoleKey.D2 :
+                    //Modify an already made shape
+                    case ConsoleKey.D2:
                         Console.WriteLine();
                         Console.WriteLine("Which shape do you want to modify? Select index");
                         string indexString = Console.ReadLine();
                         try
                         {
                             int indexModify = int.Parse(indexString);
-                            Geometry g =_shapes[indexModify];
-                            switch(g.getType())
+                            Geometry g = _shapes[indexModify]; //Get the shape
+                            switch (g.getType())
                             {
                                 case Geometry.Type.Circle:
-                                    Circle c = (Circle)g;
+                                    Circle c = (Circle)g; //cast as a circle
                                     Console.WriteLine("What do you want to modify? 1.Radius");
                                     key = Console.ReadKey();
-                                    if(key.Key == ConsoleKey.D1)
+                                    if (key.Key == ConsoleKey.D1)
                                     {
                                         Console.WriteLine("By how much?");
                                         key = Console.ReadKey();
                                         try
                                         {
-                                            if(key.Key == ConsoleKey.OemMinus)
+                                            if (key.Key == ConsoleKey.OemMinus)
                                             {
                                                 string amount = Console.ReadLine();
                                                 float amountF = float.Parse(amount);
                                                 c.Radius -= amountF;
                                                 Console.WriteLine("New radius: {0}", c.Radius);
                                             }
-                                            else if(key.Key == ConsoleKey.OemPlus)
+                                            else if (key.Key == ConsoleKey.OemPlus)
                                             {
                                                 string amount = Console.ReadLine();
                                                 float amountF = float.Parse(amount);
@@ -140,7 +143,7 @@ namespace Uppgift_2
                                                 Console.WriteLine("New radius: {0}", c.Radius);
                                             }
                                         }
-                                        catch(System.FormatException)
+                                        catch (System.FormatException)
                                         {
                                             Console.WriteLine("Not a number");
                                         }
@@ -150,7 +153,8 @@ namespace Uppgift_2
                                     Rectangle r = (Rectangle)g;
                                     Console.WriteLine("What to you want to modify? 1.Width, 2.Height");
                                     key = Console.ReadKey();
-                                    switch(key.Key)
+                                    //Find out what they want to modify
+                                    switch (key.Key)
                                     {
                                         case ConsoleKey.D1:
                                             Console.WriteLine();
@@ -158,14 +162,14 @@ namespace Uppgift_2
                                             key = Console.ReadKey();
                                             try
                                             {
-                                                if(key.Key == ConsoleKey.OemMinus)
+                                                if (key.Key == ConsoleKey.OemMinus)
                                                 {
                                                     string amount = Console.ReadLine();
                                                     float amountF = float.Parse(amount);
                                                     r.Width -= amountF;
                                                     Console.WriteLine("New Width: {0}", r.Width);
                                                 }
-                                                else if(key.Key == ConsoleKey.OemPlus)
+                                                else if (key.Key == ConsoleKey.OemPlus)
                                                 {
                                                     string amount = Console.ReadLine();
                                                     float amountF = float.Parse(amount);
@@ -173,7 +177,7 @@ namespace Uppgift_2
                                                     Console.WriteLine("New Width: {0}", r.Width);
                                                 }
                                             }
-                                            catch(System.FormatException)
+                                            catch (System.FormatException)
                                             {
                                                 Console.WriteLine("Not a number");
                                             }
@@ -184,14 +188,14 @@ namespace Uppgift_2
                                             key = Console.ReadKey();
                                             try
                                             {
-                                                if(key.Key == ConsoleKey.OemMinus)
+                                                if (key.Key == ConsoleKey.OemMinus)
                                                 {
                                                     string amount = Console.ReadLine();
                                                     float amountF = float.Parse(amount);
                                                     r.Height -= amountF;
                                                     Console.WriteLine("New Width: {0}", r.Height);
                                                 }
-                                                else if(key.Key == ConsoleKey.OemPlus)
+                                                else if (key.Key == ConsoleKey.OemPlus)
                                                 {
                                                     string amount = Console.ReadLine();
                                                     float amountF = float.Parse(amount);
@@ -199,33 +203,33 @@ namespace Uppgift_2
                                                     Console.WriteLine("New Width: {0}", r.Height);
                                                 }
                                             }
-                                            catch(System.FormatException)
+                                            catch (System.FormatException)
                                             {
                                                 Console.WriteLine("Not a number");
                                             }
                                             break;
                                         default:
-                                           Console.WriteLine("Not an option");
+                                            Console.WriteLine("Not an option");
                                             break;
                                     }
                                     break;
                                 case Geometry.Type.Triangle:
-                                    Triangle t = (Triangle)g;
+                                    Triangle t = (Triangle)g; //cast as triangle
                                     Console.WriteLine("What do you want to modify? 1.Base Width, 2.Side widths");
                                     key = Console.ReadKey();
-                                    switch(key.Key)
+                                    switch (key.Key)
                                     {
                                         case ConsoleKey.D1:
                                             Console.WriteLine("By how much?");
                                             key = Console.ReadKey();
-                                            if(key.Key == ConsoleKey.OemMinus)
+                                            if (key.Key == ConsoleKey.OemMinus)
                                             {
                                                 string amount = Console.ReadLine();
                                                 float amountF = float.Parse(amount);
                                                 t.Base -= amountF;
                                                 Console.WriteLine("New Base Width: {0}", t.Base);
                                             }
-                                            else if(key.Key == ConsoleKey.OemPlus)
+                                            else if (key.Key == ConsoleKey.OemPlus)
                                             {
                                                 string amount = Console.ReadLine();
                                                 float amountF = float.Parse(amount);
@@ -236,14 +240,14 @@ namespace Uppgift_2
                                         case ConsoleKey.D2:
                                             Console.WriteLine("By how much?");
                                             key = Console.ReadKey();
-                                            if(key.Key == ConsoleKey.OemMinus)
+                                            if (key.Key == ConsoleKey.OemMinus)
                                             {
                                                 string amount = Console.ReadLine();
                                                 float amountF = float.Parse(amount);
                                                 t.Sides -= amountF;
                                                 Console.WriteLine("New Side Length: {0}", t.Sides);
                                             }
-                                            else if(key.Key == ConsoleKey.OemPlus)
+                                            else if (key.Key == ConsoleKey.OemPlus)
                                             {
                                                 string amount = Console.ReadLine();
                                                 float amountF = float.Parse(amount);
@@ -258,23 +262,24 @@ namespace Uppgift_2
                                     break;
                             }
                         }
-                        catch(System.FormatException)
+                        catch (System.FormatException)
                         {
                             Console.WriteLine("Not a number");
                         }
-                        catch(System.ArgumentOutOfRangeException)
+                        catch (System.ArgumentOutOfRangeException)
                         {
                             Console.WriteLine("Out of bounds");
                         }
 
 
                         break;
+                    //Get information about a shape
                     case ConsoleKey.D3:
                         Console.WriteLine("Which shape do you want information about? Enter index number start from 0");
-                        string input1 = Console.ReadLine();
-                        int index = int.Parse(input1);
                         try
                         {
+                            string input1 = Console.ReadLine();
+                            int index = int.Parse(input1);
                             Geometry g = _shapes[index];
                             switch (g.getType())
                             {
@@ -334,41 +339,39 @@ namespace Uppgift_2
                                     }
                                     break;
                                 case Geometry.Type.Triangle:
-                                     repeat = true;
-                                     while (repeat)
-                                     {
-                                         Console.WriteLine("Information about Triangle: 1.Width and Height, 2.Area, 3.Circumference, 4.Return");
-                                         key = Console.ReadKey();
-                                         Triangle t = (Triangle)g;
-                                         switch (key.Key)
-                                         {
-                                             case ConsoleKey.D1:
-                                                 Console.WriteLine("Base width:{0} Side length:{1}", t.Base, t.Sides);
-                                                 break;
-                                             case ConsoleKey.D2:
-                                                 Console.WriteLine("Area: " + t.Area);
-                                                 break;
-                                             case ConsoleKey.D3:
-                                                 Console.WriteLine("Circumference" + t.Circumference);
-                                                 break;
-                                             case ConsoleKey.D4:
-                                                 repeat = false;
-                                                 break;
-                                             default:
-                                                 Console.WriteLine("Not an option");
-                                                 break;
-                                         }
-                                     }
+                                    repeat = true;
+                                    while (repeat)
+                                    {
+                                        Console.WriteLine("Information about Triangle: 1.Width and Height, 2.Area, 3.Circumference, 4.Return");
+                                        key = Console.ReadKey();
+                                        Triangle t = (Triangle)g;
+                                        switch (key.Key)
+                                        {
+                                            case ConsoleKey.D1:
+                                                Console.WriteLine("Base width:{0} Side length:{1}", t.Base, t.Sides);
+                                                break;
+                                            case ConsoleKey.D2:
+                                                Console.WriteLine("Area: " + t.Area);
+                                                break;
+                                            case ConsoleKey.D3:
+                                                Console.WriteLine("Circumference" + t.Circumference);
+                                                break;
+                                            case ConsoleKey.D4:
+                                                repeat = false;
+                                                break;
+                                            default:
+                                                Console.WriteLine("Not an option");
+                                                break;
+                                        }
+                                    }
                                     break;
-
-                            }    
-                            
+                            }
                         }
-                        catch(System.NullReferenceException e)
+                        catch (System.NullReferenceException e)
                         {
                             Console.WriteLine(e.Data);
                         }
-                        catch(System.ArgumentOutOfRangeException)
+                        catch (System.ArgumentOutOfRangeException)
                         {
                             Console.WriteLine("Out of index");
                         }
@@ -380,12 +383,10 @@ namespace Uppgift_2
                         Console.WriteLine("Not an options , pick something else");
                         break;
                 }
-               
+
             }
-            
+
             Console.ReadLine();
-
-
         }
     }
 }

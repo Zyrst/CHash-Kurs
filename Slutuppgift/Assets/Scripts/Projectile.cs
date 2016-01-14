@@ -31,6 +31,7 @@ public class Projectile : Entity {
         else
             GetComponent<SpriteRenderer>().sprite = _shots[1];
     }
+
     public override void Move()
     {
         transform.position += (_dir * MoveSpeed) * Time.deltaTime;

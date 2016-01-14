@@ -12,6 +12,7 @@ namespace Uppgift1
         private float mX;
         private float mY;
 
+        //Property for x component
         public float X 
         {
             get
@@ -23,7 +24,7 @@ namespace Uppgift1
                 mX = value;
             }
         }
-
+        //Y component
         public float Y
         {
             get
@@ -35,7 +36,7 @@ namespace Uppgift1
                 mY = value;
             }
         }
-
+        //Create a new vector with x and y parameters
         public static Vector createVector(float x, float y)
         {
             Vector v = new Vector();
