@@ -51,7 +51,7 @@ namespace Uppgift3
             }
             Console.WriteLine("Count before remove:{0} ", intVal.Count);
 
-            for (int j = 1000; j < j + 100; j += 10 )
+            for (int j = 1000; j < 2000; j++)
             {
                 intVal.Remove(j);
             }

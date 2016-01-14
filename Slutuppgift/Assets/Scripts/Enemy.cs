@@ -27,7 +27,7 @@ public class Enemy : Entity {
 	
 	// Update is called once per frame
 	void Update () {
-        Fire();
+        Shoot();
         Move();
         CheckBoundries();
 	}
@@ -80,7 +80,7 @@ public class Enemy : Entity {
         }
     }
 
-    public void Fire()
+    public void Shoot()
     {
         if(!_cd)
         {
