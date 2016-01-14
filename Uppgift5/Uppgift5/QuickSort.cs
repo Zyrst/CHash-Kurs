@@ -28,6 +28,7 @@ namespace Uppgift5
             List<int> lower = new List<int>();
             List<int> greater = new List<int>();
             greater.Add(pivot);
+            //Split again from a pivot element
             for (int i = 0; i < mList.Count; i++)
             {
                 if (mList[i] >= pivot)
@@ -39,16 +40,6 @@ namespace Uppgift5
                     lower.Add(mList[i]);
                 }
             }
-
-            //for(int i = 0; i < mList.Count; i += 2)
-            //{
-            //    lower.Add(mList[i]);
-            //}
-
-            //for (int i = 1; i < mList.Count; i += 2)
-            //{
-            //    greater.Add(mList[i]);
-            //}
 
             Thread thread = new Thread(() =>
             {

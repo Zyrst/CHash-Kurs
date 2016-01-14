@@ -39,9 +39,16 @@ namespace Uppgift_4
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            
+           
         }
 
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
         private void button4_Click(object sender, EventArgs e)
         {
             this.textBox1.Text = "";
